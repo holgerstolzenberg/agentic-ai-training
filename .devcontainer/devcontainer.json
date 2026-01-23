@@ -1,0 +1,36 @@
+{
+	"name": "Node.js",
+	"image": "ghcr.io/innoq-trainings/agentic-se-image:latest",
+	"runArgs": [
+		"--init",
+		"--privileged"
+	],
+	"mounts": [
+		"source=dind-var-lib-docker,target=/var/lib/docker,type=volume"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"anthropic.claude-code",
+				"esbenp.prettier-vscode",
+				"DavidAnson.vscode-markdownlint",
+				"bierner.markdown-mermaid",
+				"pomdtr.markdown-kroki"
+			]
+		}
+	},
+	"secrets": {
+		"ANTHROPIC_API_KEY": {
+			"description": "Hier musst du den API-Key eintragen. Du bekommst ihn von einem Trainer"
+		}
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {
+	// },
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// "containerEnv": {},
+	"postStartCommand": "sudo /usr/local/share/docker-init.sh"
+}
