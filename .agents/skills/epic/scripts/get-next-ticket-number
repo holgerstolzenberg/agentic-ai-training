@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Get the next sequential ticket number for CLVN project
+# Usage: ./scripts/get-next-ticket-number
+
+# Get max ticket number (returns empty if no tickets exist)
+MAX_TICKET=$(find docs/produkt/backlog -name "CLVN-*" -exec basename {} \; | grep -o 'CLVN-[0-9]\+' | sed 's/CLVN-//' | sort -n | tail -1)
+
+# If empty, start with 001, otherwise increment by 1
+if [ -z "$MAX_TICKET" ]; then
+  NEXT_TICKET="001"
+else
+  NEXT_TICKET=$(printf "%03d" $((10#$MAX_TICKET + 1)))
+fi
+
+echo "Next ticket number: CLVN-$NEXT_TICKET"
