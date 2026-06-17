@@ -3,7 +3,7 @@ name: story
 description: Erstellt aus den User Stories eines Epics einheitliche User-Story-Tickets im Backlog des Calvin Raumbuchungssystems.
 argument-hint: "[Epic (Name, Ticket-ID oder Pfad)]"
 disable-model-invocation: true
-allowed-tools: Read, Write, Bash(./.claude/skills/story/scripts/list-missing-stories:*), Bash(cat .claude/skills/story/templates/story.md), Bash(cat .claude/skills/story/examples/CLVN-007-STORY-arbeitsplatz-auswaehlen.md), Bash(ls docs/produkt/backlog), Bash(find docs/produkt/backlog:*)
+allowed-tools: Read, Write, Bash(./.claude/skills/story/scripts/list-missing-stories:*), Bash(cat .claude/skills/story/templates/story.md), Bash(cat .claude/skills/story/examples/CLVN-007-STORY-select-workplace.md), Bash(ls docs/product/backlog), Bash(find docs/product/backlog:*)
 ---
 # Rolle
 
@@ -12,28 +12,28 @@ Du bist ein Senior Product Owner mit 20 Jahren Erfahrung in der Erstellung gut s
 # Kontext
 
 Die Produktvision definiert die Anforderungen an das Endprodukt:
-@docs/produkt/produktvision.md
+@docs/product/product-vision.md
 
 Das Glossar definiert die Ubiquitous Language:
-@docs/produkt/glossar.md
+@docs/product/glossary.md
 
 Die User Story Map gibt dir den Überblick über die geplanten Features:
-@docs/produkt/user-story-maps/raumbuchung.md
+@docs/product/user-story-maps/room-booking.md
 
 **Aufbau eines Epics:**
-Ein Epic liegt als Markdown-Datei unter `docs/produkt/backlog/` und enthält im Abschnitt `## User Stories` eine Liste von User Stories. Jeder Listeneintrag verlinkt eine eigene Ticket-Datei (`CLVN-<NUMMER>-STORY-<name>.md`) und enthält den Story-Text im Format "Als ... möchte ich ..., damit ...". Die Ticketnummern der Stories sind im Epic bereits vergeben und fortlaufend.
+Ein Epic liegt als Markdown-Datei unter `docs/product/backlog/` und enthält im Abschnitt `## User Stories` eine Liste von User Stories. Jeder Listeneintrag verlinkt eine eigene Ticket-Datei (`CLVN-<NUMMER>-STORY-<name>.md`) und enthält den Story-Text im Format "Als ... möchte ich ..., damit ...". Die Ticketnummern der Stories sind im Epic bereits vergeben und fortlaufend.
 
 # Instruktionen
 
 Führe diese Schritte der Reihe nach aus:
 
-1. **Epic lokalisieren**: Löse das über `$ARGUMENTS` übergebene Epic zu einer Datei unter `docs/produkt/backlog/` auf. `$ARGUMENTS` kann ein Pfad, eine Ticket-ID (z.B. `CLVN-001`) oder ein Name (z.B. "Räume finden") sein. Lies die Epic-Datei vollständig.
+1. **Epic lokalisieren**: Löse das über `$ARGUMENTS` übergebene Epic zu einer Datei unter `docs/product/backlog/` auf. `$ARGUMENTS` kann ein Pfad, eine Ticket-ID (z.B. `CLVN-001`) oder ein Name (z.B. "Räume finden") sein. Lies die Epic-Datei vollständig.
 
 2. **Fehlende Tickets ermitteln**: Führe das Skript aus, um zu erkennen, für welche im Epic referenzierten User Stories noch KEIN Ticket existiert:
    `./.claude/skills/story/scripts/list-missing-stories <pfad-zum-epic.md>`
    Erstelle ausschließlich Tickets für die mit `[fehlt]` markierten Stories. Mit `[vorhanden]` markierte Stories werden übersprungen, damit keine doppelten Ticketnummern entstehen.
 
-3. **Pro fehlender User Story ein Ticket erstellen** unter `docs/produkt/backlog/`. Folge dabei strikt dem Template:
+3. **Pro fehlender User Story ein Ticket erstellen** unter `docs/product/backlog/`. Folge dabei strikt dem Template:
    - Übernimm Ticketnummer und Dateiname unverändert aus dem Epic (so wie im Skript-Output angegeben).
    - Übernimm den Story-Text ("Als ... möchte ich ..., damit ...") aus dem Epic.
    - Formuliere eine **Beschreibung** des fachlichen Kontexts.
@@ -65,9 +65,9 @@ Führe diese Schritte der Reihe nach aus:
 
 # Beispiel
 
-**Dateiname:** CLVN-007-STORY-arbeitsplatz-auswaehlen.md
+**Dateiname:** CLVN-007-STORY-select-workplace.md
 **Inhalt:**
-!`cat .claude/skills/story/examples/CLVN-007-STORY-arbeitsplatz-auswaehlen.md`
+!`cat .claude/skills/story/examples/CLVN-007-STORY-select-workplace.md`
 
 # Aufgabe
 

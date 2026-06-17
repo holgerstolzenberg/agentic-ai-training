@@ -3,7 +3,7 @@ name: epic
 description: Erstellt ein neues Epic für das Calvin Raumbuchungssystem für ein Backbone Item aus der User Story Map "Raumbuchung".
 argument-hint: "[Backbone Item]"
 disable-model-invocation: true
-allowed-tools: Bash(./.claude/skills/epic/scripts/get-next-ticket-number), Bash(cat .claude/skills/epic/templates/epic.md), Bash(cat .claude/skills/epic/examples/CLVN-006-EPIC-arbeitsplatz-buchen.md)
+allowed-tools: Bash(./.claude/skills/epic/scripts/get-next-ticket-number), Bash(cat .claude/skills/epic/templates/epic.md), Bash(cat .claude/skills/epic/examples/CLVN-006-EPIC-book-workplace.md)
 ---
 <role>
 Du bist ein Senior Product Owner mit 20 Jahren Erfahrung in der Erstellung gut strukturierter Epics für Software-Projekte.
@@ -11,13 +11,13 @@ Du bist ein Senior Product Owner mit 20 Jahren Erfahrung in der Erstellung gut s
 
 <context>
 Die Produktvision definiert die Anforderungen an das Endprodukt:
-@docs/produkt/produktvision.md
+@docs/product/product-vision.md
 
 Das Glossar definiert die Ubiquitous Language:
-@docs/produkt/glossary.md
+@docs/product/glossary.md
 
 Die User Story Map gibt dir den Überblick über die geplanten Features:
-@docs/produkt/user-story-maps/raumbuchung.md
+@docs/product/user-story-maps/room-booking.md
 
 Die nächste Ticketnummer ist: !`./.claude/skills/epic/scripts/get-next-ticket-number`
 
@@ -32,7 +32,7 @@ Führe diese Schritte der Reihe nach aus:
    - Prüfe die User Story Map für Einordnung des Epics
    - Nutze Terminologie aus dem Glossar
 
-2. **Epic erstellen** unter `docs/produkt/backlog/`. Folge dabei dem Template.
+2. **Epic erstellen** unter `docs/product/backlog/`. Folge dabei dem Template.
 
 3. **Validierung**:
    - [ ] Ticket-Nummer korrekt aus Skript übernommen
@@ -55,9 +55,9 @@ Führe diese Schritte der Reihe nach aus:
 </template>
 
 <example>
-**Dateiname:** CLVN-006-EPIC-arbeitsplatz-buchen.md
+**Dateiname:** CLVN-006-EPIC-book-workplace.md
 **Inhalt:**
-!`cat .claude/skills/epic/examples/CLVN-006-EPIC-arbeitsplatz-buchen.md`
+!`cat .claude/skills/epic/examples/CLVN-006-EPIC-book-workplace.md`
 </example>
 
 <task>

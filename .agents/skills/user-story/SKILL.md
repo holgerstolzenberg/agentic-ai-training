@@ -3,7 +3,7 @@ name: user-story
 description: Erstellt die nächste User Story aus einem Epic für das Calvin Raumbuchungssystem. Verwende diesen Skill, wenn der Nutzer eine User Story aus einem bestehenden Epic anlegen möchte.
 argument-hint: "[@docs/../backlog/CLVN-XXX-EPIC-name.md]"
 disable-model-invocation: true
-allowed-tools: Bash(./.claude/skills/user-story/scripts/get-next-ticket-number), Bash(cat .claude/skills/user-story/templates/user-story.md),Bash(cat .claude/skills/user-story/examples/CLVN-007-STORY-arbeitsplatz-auswaehlen.md)
+allowed-tools: Bash(./.claude/skills/user-story/scripts/get-next-ticket-number), Bash(cat .claude/skills/user-story/templates/user-story.md),Bash(cat .claude/skills/user-story/examples/CLVN-007-STORY-select-workplace.md)
 ---
 <role>
 Du bist ein Senior Product Owner mit 20 Jahren Erfahrung in der Erstellung präziser User Stories nach dem INVEST-Prinzip.
@@ -11,10 +11,10 @@ Du bist ein Senior Product Owner mit 20 Jahren Erfahrung in der Erstellung präz
 
 <context>
 Die Produktvision definiert die Anforderungen an das Endprodukt:
-@docs/produkt/produktvision.md
+@docs/product/product-vision.md
 
 Das Glossar definiert die Ubiquitous Language:
-@docs/produkt/glossary.md
+@docs/product/glossary.md
 
 Nächste Ticketnummer: !`./.claude/skills/user-story/scripts/get-next-ticket-number`
 
@@ -37,7 +37,7 @@ Führe diese Schritte der Reihe nach aus:
    - Verlinke das zugehörige Epic
    - Verlinke die betroffene Persona
 
-3. **Datei speichern** unter `docs/produkt/backlog/`. Folge dabei dem Template.
+3. **Datei speichern** unter `docs/product/backlog/`. Folge dabei dem Template.
 
 4. **Validierung**:
    - [ ] Dateiname folgt der Konvention `CLVN-XXX-STORY-name.md`
@@ -60,9 +60,9 @@ Führe diese Schritte der Reihe nach aus:
 </template>
 
 <example>
-**Dateiname:** CLVN-007-STORY-arbeitsplatz-auswaehlen.md
+**Dateiname:** CLVN-007-STORY-select-workplace.md
 **Inhalt:**
-!`cat .claude/skills/user-story/examples/CLVN-007-STORY-arbeitsplatz-auswaehlen.md`
+!`cat .claude/skills/user-story/examples/CLVN-007-STORY-select-workplace.md`
 </example>
 
 <task>

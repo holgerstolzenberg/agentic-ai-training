@@ -23,8 +23,8 @@ Ein INNOQ-Mitarbeiter plant einen Bürotag und möchte vorab sicherstellen, dass
 
 ## Betroffene Persona
 
-[INNOQ-Mitarbeiter](/docs/produkt/personas/innoq-mitarbeiter.md)
+[INNOQ-Mitarbeiter](/docs/product/personas/innoq-employee.md)
 
 ## Zugehöriges Epic
 
-[CLVN-006 - Arbeitsplatz buchen](/docs/produkt/backlog/CLVN-006-EPIC-arbeitsplatz-buchen.md)
+[CLVN-006 - Arbeitsplatz buchen](/docs/product/backlog/CLVN-006-EPIC-book-workplace.md)

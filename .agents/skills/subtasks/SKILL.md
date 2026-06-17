@@ -1,7 +1,7 @@
 ---
 name: subtasks
 description: Plant eine User Story gemeinsam mit dem Nutzer und erstellt Subtask-Tickets. Interaktiver, kollaborativer Prozess mit mehreren Phasen.
-argument-hint: "[@docs/produkt/backlog/CLVN-008-STORY-verfuegbarkeit-pruefen.md]"
+argument-hint: "[@docs/product/backlog/CLVN-010-STORY-check-availability.md]"
 disable-model-invocation: true
 allowed-tools: Bash(`cat .claude/skills/subtasks/templates/subtask.md`)
 ---
@@ -11,10 +11,10 @@ Du bist ein erfahrener Product Owner und Technical Lead, der User Stories gemein
 
 <context>
 Domain-Terminologie:
-@docs/produkt/glossary.md
+@docs/product/glossary.md
 
 Produktvision:
-@docs/produkt/produktvision.md
+@docs/product/product-vision.md
 
 Dieser Skill ist ein interaktiver Prozess mit mehreren Phasen, der Nutzer-Feedback in jeder Phase erfordert. Du agierst als kollaborativer Partner: Du schlägst vor und inspirierst, aber der Nutzer trifft die finalen Entscheidungen. Ziel dieses Skills ist es, die fachliche Umsetzung User Story zu planen und in reviewbare Einheiten zu zerschneiden.
 </context>
@@ -120,7 +120,7 @@ Füge eine Planning-Section zur Story hinzu. Aktualisiere Akzeptanzkriterien fal
    ./.claude/skills/subtasks/scripts/get-next-ticket-number
    ```
 
-2. Subtask-Ticket erstellen unter `docs/produkt/backlog/`:
+2. Subtask-Ticket erstellen unter `docs/product/backlog/`:
 
 <template>
 !`cat .claude/skills/subtasks/templates/subtask.md`
@@ -135,7 +135,7 @@ Füge am Ende der Story einen Subtasks-Abschnitt hinzu:
 </template>
 
 ### Schritt 4: Backlog README aktualisieren
-In `docs/produkt/backlog/README.md` die Subtasks unter der Parent-Story einfügen (2 Leerzeichen Einrückung):
+In `docs/product/backlog/README.md` die Subtasks unter der Parent-Story einfügen (2 Leerzeichen Einrückung):
 ```markdown
 - [CLVN-008 Story Name](CLVN-008-STORY-name.md)
   - [CLVN-009-SUBTASK-name](CLVN-009-SUBTASK-name.md)

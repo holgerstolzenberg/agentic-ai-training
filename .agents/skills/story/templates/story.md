@@ -24,7 +24,7 @@ Kurze Beschreibung des fachlichen Kontexts und der Motivation der User Story. Er
 - [ ] Alle Akzeptanzkriterien sind erfüllt und überprüft
 - [ ] Code ist implementiert und per Pull Request reviewed
 - [ ] Automatisierte Tests sind vorhanden und grün
-- [ ] Ubiquitous Language aus dem [Glossar](/docs/produkt/glossar.md) wurde eingehalten
+- [ ] Ubiquitous Language aus dem [Glossar](/docs/product/glossary.md) wurde eingehalten
 - [ ] Relevante Dokumentation ist aktualisiert
 - [ ] Funktion ist vom Product Owner abgenommen
 
@@ -34,4 +34,4 @@ Kurze Beschreibung des fachlichen Kontexts und der Motivation der User Story. Er
 
 ## Betroffene Personas
 
-- [<NAME_DER_PERSONA>](/docs/produkt/personas/<persona>.md)
+- [<NAME_DER_PERSONA>](/docs/product/personas/<persona>.md)

@@ -22,8 +22,8 @@ Detaillierte Beschreibung des Kontexts und der gewünschten Funktionalität. Erk
 
 ## Betroffene Persona
 
-[<PERSONA_NAME>](/docs/produkt/personas/<persona>.md)
+[<PERSONA_NAME>](/docs/product/personas/<persona>.md)
 
 ## Zugehöriges Epic
 
-[CLVN-<EPIC_NUMBER> - <EPIC_NAME>](/docs/produkt/backlog/CLVN-<EPIC_NUMBER>-EPIC-<epic-name>.md)
+[CLVN-<EPIC_NUMBER> - <EPIC_NAME>](/docs/product/backlog/CLVN-<EPIC_NUMBER>-EPIC-<epic-name>.md)

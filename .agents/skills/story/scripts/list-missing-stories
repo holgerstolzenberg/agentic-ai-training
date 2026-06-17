@@ -11,7 +11,7 @@
 set -euo pipefail
 
 EPIC_FILE="${1:-}"
-BACKLOG_DIR="docs/produkt/backlog"
+BACKLOG_DIR="docs/product/backlog"
 
 if [ -z "$EPIC_FILE" ] || [ ! -f "$EPIC_FILE" ]; then
   echo "Fehler: Epic-Datei nicht gefunden: '$EPIC_FILE'" >&2

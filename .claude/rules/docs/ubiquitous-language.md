@@ -4,4 +4,4 @@ paths:
 ---
 # Ubiquitous Language
 
-Halte dich immer an das Wording aus dem @docs/produkt/glossar.md
+Always follow the wording from @docs/product/glossary.md

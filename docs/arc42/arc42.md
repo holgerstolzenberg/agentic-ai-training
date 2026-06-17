@@ -14,7 +14,7 @@ Calvin ist INNOQs internes Raum- und Arbeitsplatzbuchungssystem zur Verwaltung v
 - Hybrides Arbeiten erfordert zuverlässige Arbeitsplatzkoordination
 - Vermeidung von Ressourcenkonflikten und Doppelbuchungen
 
-Für die vollständige Produktbeschreibung und Features siehe [Produktvision](../produkt/produktvision.md).
+Für die vollständige Produktbeschreibung und Features siehe [Produktvision](../product/product-vision.md).
 
 ### Qualitätsziele
 
@@ -64,7 +64,7 @@ GL --> Calvin : Sieht Reports
 
 Das Calvin-System besteht aus einer Single Page Application (SPA) und einem separaten Booking Service. Diese Architektur wurde für die Prototyping-Phase optimiert und ermöglicht eine klare Trennung zwischen Benutzeroberfläche und Geschäftslogik.
 
-Die **Stamm-/Ressourcendaten** (Standorte, Konferenzräume, Ausstattung) liegen als **Mock-Daten in der SPA** – ein separater Resource-Service entfällt im Prototyp (siehe [ADR-002](../architektur/adrs/ADR-002-ressourcendaten-als-mock-in-der-spa.md)). Der **Booking Service** arbeitet ausschließlich mit den **IDs** aus diesen Mock-Daten.
+Die **Stamm-/Ressourcendaten** (Standorte, Konferenzräume, Ausstattung) liegen als **Mock-Daten in der SPA** – ein separater Resource-Service entfällt im Prototyp (siehe [ADR-002](../architecture/adrs/ADR-002-resource-data-as-mock-in-spa.md)). Der **Booking Service** arbeitet ausschließlich mit den **IDs** aus diesen Mock-Daten.
 
 ```plantuml
 @startuml
@@ -96,11 +96,11 @@ spa --> booking : REST API\n(JSON)
 
 ### Schnittstelle: SPA → Booking Service
 
-Die SPA kommuniziert mit dem Booking Service über eine REST API (JSON über HTTPS). Die API-Spezifikation wird als OpenAPI-Dokument im Backend gepflegt. Übertragen werden **Buchungen und Ressourcen-IDs** – die Stammdaten selbst stellt der Booking Service nicht bereit (siehe [ADR-002](../architektur/adrs/ADR-002-ressourcendaten-als-mock-in-der-spa.md)).
+Die SPA kommuniziert mit dem Booking Service über eine REST API (JSON über HTTPS). Die API-Spezifikation wird als OpenAPI-Dokument im Backend gepflegt. Übertragen werden **Buchungen und Ressourcen-IDs** – die Stammdaten selbst stellt der Booking Service nicht bereit (siehe [ADR-002](../architecture/adrs/ADR-002-resource-data-as-mock-in-spa.md)).
 
 ### Authentifizierung
 
-Im Prototyp erfolgt die Authentifizierung über **HTTP Basic-Auth ohne Passwörter** (der Benutzername bestimmt die Identität) – zum schnellen Testen mit verschiedenen Nutzern und ohne Drittsystem-Abhängigkeit. Eine **Okta-Integration** wird zum Produktivgang nachgeliefert (siehe [ADR-003](../architektur/adrs/ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md)).
+Im Prototyp erfolgt die Authentifizierung über **HTTP Basic-Auth ohne Passwörter** (der Benutzername bestimmt die Identität) – zum schnellen Testen mit verschiedenen Nutzern und ohne Drittsystem-Abhängigkeit. Eine **Okta-Integration** wird zum Produktivgang nachgeliefert (siehe [ADR-003](../architecture/adrs/ADR-003-authentication-basic-auth-without-passwords.md)).
 
 ---
 
@@ -108,13 +108,13 @@ Im Prototyp erfolgt die Authentifizierung über **HTTP Basic-Auth ohne Passwört
 
 Architekturentscheidungen sind als Architecture Decision Records (ADR) dokumentiert:
 
-- `docs/arc42/adrs/` – [ADR-001: Frontend-Prototyp mit separatem Booking Service](./adrs/ADR-001-frontend-prototyp-und-booking-service.md)
-- `docs/architektur/adrs/`:
-  - [ADR-001: Technologie-Stack für den Booking Service](../architektur/adrs/ADR-001-technologie-stack-fuer-booking-service.md)
-  - [ADR-002: Ressourcendaten als Mock-Daten in der SPA](../architektur/adrs/ADR-002-ressourcendaten-als-mock-in-der-spa.md)
-  - [ADR-003: Authentifizierung – Basic-Auth ohne Passwörter](../architektur/adrs/ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md)
+- `docs/arc42/adrs/` – [ADR-001: Frontend-Prototyp mit separatem Booking Service](./adrs/ADR-001-frontend-prototype-and-booking-service.md)
+- `docs/architecture/adrs/`:
+  - [ADR-001: Technologie-Stack für den Booking Service](../architecture/adrs/ADR-001-technology-stack-for-booking-service.md)
+  - [ADR-002: Ressourcendaten als Mock-Daten in der SPA](../architecture/adrs/ADR-002-resource-data-as-mock-in-spa.md)
+  - [ADR-003: Authentifizierung – Basic-Auth ohne Passwörter](../architecture/adrs/ADR-003-authentication-basic-auth-without-passwords.md)
 
-Bewusst eingegangene Kompromisse sind in den [Technischen Schulden](../architektur/technische-schulden.md) festgehalten.
+Bewusst eingegangene Kompromisse sind in den [Technischen Schulden](../architecture/technical-debt.md) festgehalten.
 
 ---
 
@@ -122,7 +122,7 @@ Bewusst eingegangene Kompromisse sind in den [Technischen Schulden](../architekt
 
 Diese Qualitätsszenarien definieren die wesentlichen Qualitätsmerkmale des Calvin-Systems.
 
-> Ausformulierte Qualitätsszenarien im Template `<Environment> <Source> <Event> <Artifact> <Response> <Measure>` findest du in den [Qualitätsanforderungen](../architektur/qualitätsanforderungen/README.md) (ein Szenario je Datei, QA-1 … QA-5).
+> Ausformulierte Qualitätsszenarien im Template `<Environment> <Source> <Event> <Artifact> <Response> <Measure>` findest du in den [Qualitätsanforderungen](../architecture/quality-requirements/README.md) (ein Szenario je Datei, QA-1 … QA-5).
 
 ### Qualitätsbaum
 
@@ -196,4 +196,4 @@ Die Vision betont "unkomplizierte unbürokratische leichte Buchung für jeden". 
 
 ## Glossar
 
-Das Glossar findest du unter [/docs/produkt/glossar.md](/docs/produkt/glossar.md).
+Das Glossar findest du unter [/docs/product/glossary.md](/docs/product/glossary.md).

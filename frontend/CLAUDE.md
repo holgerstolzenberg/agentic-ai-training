@@ -5,13 +5,13 @@
 | Document | Path |
 |----------|------|
 | Architecture (arc42) | `docs/arc42/arc42.md` |
-| ADR-001 Frontend + Booking Service | `docs/arc42/adrs/ADR-001-frontend-prototyp-und-booking-service.md` |
-| ADR-002 Resource Data as Mock Data | `docs/architektur/adrs/ADR-002-ressourcendaten-als-mock-in-der-spa.md` |
-| ADR-003 Basic Auth without Passwords | `docs/architektur/adrs/ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md` |
-| Quality Requirements | `docs/architektur/qualitätsanforderungen/README.md` |
-| Technical Debt | `docs/architektur/technische-schulden.md` |
-| Product Backlog | `docs/produkt/backlog/backlog.md` |
-| Glossary (Ubiquitous Language) | `docs/produkt/glossar.md` |
+| ADR-001 Frontend + Booking Service | `docs/arc42/adrs/ADR-001-frontend-prototype-and-booking-service.md` |
+| ADR-002 Resource Data as Mock Data | `docs/architecture/adrs/ADR-002-resource-data-as-mock-in-spa.md` |
+| ADR-003 Basic Auth without Passwords | `docs/architecture/adrs/ADR-003-authentication-basic-auth-without-passwords.md` |
+| Quality Requirements | `docs/architecture/quality-requirements/README.md` |
+| Technical Debt | `docs/architecture/technical-debt.md` |
+| Product Backlog | `docs/product/backlog/backlog.md` |
+| Glossary (Ubiquitous Language) | `docs/product/glossary.md` |
 
 Always follow the wording from the glossary.
 

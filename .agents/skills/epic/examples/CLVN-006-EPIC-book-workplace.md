@@ -15,14 +15,14 @@ INNOQ-Mitarbeiter arbeiten überwiegend remote und besuchen das Büro nur etwa e
 
 ## User Stories
 
-- [CLVN-007](/docs/produkt/backlog/CLVN-007-STORY-arbeitsplatz-auswaehlen.md) Als INNOQ-Mitarbeiter möchte ich einen verfügbaren Arbeitsplatz auswählen und bestätigen, damit ich den für mich passenden Platz reservieren kann
-- [CLVN-008](/docs/produkt/backlog/CLVN-008-STORY-buchung-absenden.md) Als INNOQ-Mitarbeiter möchte ich meine Arbeitsplatzbuchung absenden, damit die Reservierung verbindlich wird
-- [CLVN-009](/docs/produkt/backlog/CLVN-009-STORY-buchungsbestaetigung.md) Als INNOQ-Mitarbeiter möchte ich eine Buchungsbestätigung erhalten, damit ich Gewissheit habe, dass mein Arbeitsplatz reserviert ist
+- [CLVN-007](/docs/product/backlog/CLVN-007-STORY-select-workplace.md) Als INNOQ-Mitarbeiter möchte ich einen verfügbaren Arbeitsplatz auswählen und bestätigen, damit ich den für mich passenden Platz reservieren kann
+- [CLVN-008](/docs/product/backlog/CLVN-008-STORY-buchung-absenden.md) Als INNOQ-Mitarbeiter möchte ich meine Arbeitsplatzbuchung absenden, damit die Reservierung verbindlich wird
+- [CLVN-009](/docs/product/backlog/CLVN-009-STORY-buchungsbestaetigung.md) Als INNOQ-Mitarbeiter möchte ich eine Buchungsbestätigung erhalten, damit ich Gewissheit habe, dass mein Arbeitsplatz reserviert ist
 
 ## Betroffene Personas
 
-- [INNOQ-Mitarbeiter](/docs/produkt/personas/innoq-mitarbeiter.md)
+- [INNOQ-Mitarbeiter](/docs/product/personas/innoq-employee.md)
 
 ## Step in User Journey
 
-[Arbeitsplatzbuchung](/docs/produkt/user-journeys/arbeitsplatzbuchung.md) – Step: "Arbeitsplatz Buchen"
+[Arbeitsplatzbuchung](/docs/product/user-journeys/arbeitsplatzbuchung.md) – Step: "Arbeitsplatz Buchen"

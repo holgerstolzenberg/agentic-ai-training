@@ -15,6 +15,6 @@ The frontend prototype works **without a backend**. All data is mocked in the fr
 ## Angular SPA with Routing
 
 - **Angular Router** with `withHashLocation()` for client-side routing
-- URLs update when navigating (hash-based: `/#/raeume-finden`)
+- URLs update when navigating (hash-based: `/#/find-rooms`)
 - Routes defined in `frontend/src/app/app.routes.ts` with lazy-loaded page components
 - All page components live in `frontend/src/app/pages/`

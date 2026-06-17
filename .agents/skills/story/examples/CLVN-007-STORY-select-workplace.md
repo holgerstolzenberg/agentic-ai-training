@@ -25,14 +25,14 @@ INNOQ-Mitarbeiter besuchen das Büro nur etwa einmal pro Woche und haben keinen 
 - [ ] Alle Akzeptanzkriterien sind erfüllt und überprüft
 - [ ] Code ist implementiert und per Pull Request reviewed
 - [ ] Automatisierte Tests sind vorhanden und grün
-- [ ] Ubiquitous Language aus dem [Glossar](/docs/produkt/glossar.md) wurde eingehalten
+- [ ] Ubiquitous Language aus dem [Glossar](/docs/product/glossary.md) wurde eingehalten
 - [ ] Relevante Dokumentation ist aktualisiert
 - [ ] Funktion ist vom Product Owner abgenommen
 
 ## Epic
 
-[CLVN-006 Arbeitsplatz buchen](./CLVN-006-EPIC-arbeitsplatz-buchen.md)
+[CLVN-006 Arbeitsplatz buchen](./CLVN-006-EPIC-book-workplace.md)
 
 ## Betroffene Personas
 
-- [INNOQ-Mitarbeiter](/docs/produkt/personas/innoq-mitarbeiter.md)
+- [INNOQ-Mitarbeiter](/docs/product/personas/innoq-employee.md)

@@ -12,19 +12,19 @@ Der Nutzer entscheidet über das Design. Du setzt um, schlägst vor und verifizi
 
 <context>
 ## Produktvision
-@docs/produkt/produktvision.md
+@docs/product/product-vision.md
 
 ## Glossar (Ubiquitous Language)
-@docs/produkt/glossar.md
+@docs/product/glossary.md
 
 ## Persona
-@docs/produkt/personas/innoq-mitarbeiter.md
+@docs/product/personas/innoq-employee.md
 
 ## Backlog
-@docs/produkt/backlog/backlog.md
+@docs/product/backlog/backlog.md
 
 ## User Story Map
-@docs/produkt/user-story-maps/raumbuchung.md
+@docs/product/user-story-maps/room-booking.md
 
 </context>
 
