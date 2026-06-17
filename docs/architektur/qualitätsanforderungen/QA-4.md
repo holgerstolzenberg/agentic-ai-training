@@ -12,16 +12,22 @@
 
 | Baustein | Ausprägung |
 |----------|------------|
-| **Environment** | Normalbetrieb, eingeloggter Mitarbeiter betrachtet eine fremde Belegung |
-| **Source** | INNOQ-Mitarbeiter (nicht der Buchende) |
+| **Environment** | Normalbetrieb, angemeldeter Mitarbeiter betrachtet eine fremde Belegung |
+| **Source** | INNOQ-Mitarbeiter (nicht der Buchende), identifiziert über den Basic-Auth-Benutzernamen |
 | **Event** | Öffnet die Buchungsübersicht / Tagesbelegung eines Raums an einem Standort |
-| **Artifact** | Calvin Web-App + Booking Service (Autorisierung der ausgelieferten Felder) |
+| **Artifact** | Calvin Web-App + Booking Service (Autorisierung der ausgelieferten Felder anhand des angemeldeten Nutzers) |
 | **Response** | Fremde Slots erscheinen nur als „belegt“ (ohne Titel/Notiz/Person); vollständige Details nur bei eigenen Buchungen |
 | **Measure** | In 100 % der Zugriffe keine personenbezogenen Daten (Name, Meetingtitel, Notiz) zu fremden Buchungen; abgesichert durch automatisierte Tests und Reviews |
 
 **Motivation:** Transparenz über Verfügbarkeit darf nicht zu Lasten des
 Persönlichkeitsschutzes gehen. Mitarbeiter sehen, *dass* belegt ist, aber nicht
 *wer was* macht – das wahrt Vertrauen und Datensparsamkeit.
+
+> **Hinweis (Prototyp):** Die Identität stammt im Prototyp aus **Basic-Auth ohne
+> Passwörter** ([ADR-003](../adrs/ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md)).
+> Die Feld-Anonymisierung ist umgesetzt, eine **sichere** Durchsetzung dieses
+> Szenarios setzt jedoch die spätere Okta-Integration voraus (siehe
+> [Technische Schulden TS-1](../technische-schulden.md)).
 
 ---
 

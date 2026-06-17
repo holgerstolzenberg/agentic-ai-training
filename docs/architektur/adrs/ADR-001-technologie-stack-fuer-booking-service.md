@@ -1,8 +1,14 @@
 # ADR-001: Technologie-Stack für den Booking Service
 
-**Status:** Akzeptiert
+**Status:** Akzeptiert (Stack); **Auth-Teil ergänzt durch [ADR-003](./ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md)**
 **Datum:** 2026-06-17
 **Entscheider:** Entwicklungsteam gemeinsam mit KI-Agent (abgewogene Empfehlung)
+
+> **Aktualisierung:** Die Technologie-Wahl (Spring Boot) bleibt unverändert. Die hier
+> ursprünglich vorgesehene **Okta-Integration** wird für den Prototyp **nicht** umgesetzt –
+> siehe [ADR-003](./ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md) (Basic-Auth
+> ohne Passwörter; Okta wird zur Produktion nachgeliefert). Die Ressourcendaten liefert
+> die SPA als Mock-Daten – siehe [ADR-002](./ADR-002-ressourcendaten-als-mock-in-der-spa.md).
 
 ## Kontext und Problemstellung
 
@@ -82,8 +88,10 @@ Wir wählen **Option A – Spring Boot (Java)** mit folgendem konkreten Stack:
 - **Spring Data JPA** als Persistenzschicht
 - **H2** im **Dateimodus** als eingebettete Datenbank (Prototyp); JPA hält den
   späteren Wechsel auf **PostgreSQL** gering
-- **Spring Security – OAuth2 Resource Server** als vorbereitete **Okta**-Integration
-  (JWT-Validierung über `issuer-uri`; im Prototyp deaktivier-/zuschaltbar)
+- **Spring Security** für die Authentifizierung. Im Prototyp **HTTP Basic-Auth ohne
+  Passwörter** (Benutzername = Identität, siehe [ADR-003](./ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md));
+  der spätere Umstieg auf einen **OAuth2 Resource Server (Okta)** erfolgt ohne
+  Architekturbruch im selben Stack
 
 ## Begründung
 
@@ -111,7 +119,8 @@ aus.
 
 ### Positiv
 
-- Reife, deklarative Okta-Anbindung als Resource Server ist vorgezeichnet.
+- Reife, deklarative Okta-Anbindung als Resource Server bleibt für die Produktion
+  vorgezeichnet (im Prototyp zunächst Basic-Auth, siehe [ADR-003](./ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md)).
 - QA-2 über etablierte Transaktions-/Locking-Patterns gut absicherbar.
 - Hohe Vorhersagbarkeit der KI-gestützten Implementierung.
 - Migration H2 → PostgreSQL bleibt durch JPA klein.

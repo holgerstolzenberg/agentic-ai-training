@@ -64,6 +64,8 @@ GL --> Calvin : Sieht Reports
 
 Das Calvin-System besteht aus einer Single Page Application (SPA) und einem separaten Booking Service. Diese Architektur wurde für die Prototyping-Phase optimiert und ermöglicht eine klare Trennung zwischen Benutzeroberfläche und Geschäftslogik.
 
+Die **Stamm-/Ressourcendaten** (Standorte, Konferenzräume, Ausstattung) liegen als **Mock-Daten in der SPA** – ein separater Resource-Service entfällt im Prototyp (siehe [ADR-002](../architektur/adrs/ADR-002-ressourcendaten-als-mock-in-der-spa.md)). Der **Booking Service** arbeitet ausschließlich mit den **IDs** aus diesen Mock-Daten.
+
 ```plantuml
 @startuml
 !theme plain
@@ -89,18 +91,30 @@ spa --> booking : REST API\n(JSON)
 
 | Baustein | Verantwortlichkeit | Quellcode |
 |----------|-------------------|-----------|
-| **SPA** | Benutzeroberfläche für Buchungen, Kalenderansichten und Reports | `frontend/` |
-| **Booking Service** | Buchungslogik, Validierung, Konfliktprüfung, Auswertungsdaten | `backend/` |
+| **SPA** | Benutzeroberfläche für Buchungen, Kalenderansichten und Reports **sowie Ressourcen-/Stammdaten (Standorte, Räume, Ausstattung) als Mock-Daten** | `frontend/` |
+| **Booking Service** | Buchungslogik, Validierung, Konfliktprüfung, Auswertungsdaten; **arbeitet nur mit den IDs der Ressourcen-Mock-Daten** | `backend/` |
 
 ### Schnittstelle: SPA → Booking Service
 
-Die SPA kommuniziert mit dem Booking Service über eine REST API (JSON über HTTPS). Die API-Spezifikation wird als OpenAPI-Dokument im Backend gepflegt.
+Die SPA kommuniziert mit dem Booking Service über eine REST API (JSON über HTTPS). Die API-Spezifikation wird als OpenAPI-Dokument im Backend gepflegt. Übertragen werden **Buchungen und Ressourcen-IDs** – die Stammdaten selbst stellt der Booking Service nicht bereit (siehe [ADR-002](../architektur/adrs/ADR-002-ressourcendaten-als-mock-in-der-spa.md)).
+
+### Authentifizierung
+
+Im Prototyp erfolgt die Authentifizierung über **HTTP Basic-Auth ohne Passwörter** (der Benutzername bestimmt die Identität) – zum schnellen Testen mit verschiedenen Nutzern und ohne Drittsystem-Abhängigkeit. Eine **Okta-Integration** wird zum Produktivgang nachgeliefert (siehe [ADR-003](../architektur/adrs/ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md)).
 
 ---
 
 ## Architekturentscheidungen
 
-Architekturentscheidungen sind als Architecture Decision Records (ADR) dokumentiert. Die ADRs findest du unter `docs/arc42/adrs/`.
+Architekturentscheidungen sind als Architecture Decision Records (ADR) dokumentiert:
+
+- `docs/arc42/adrs/` – [ADR-001: Frontend-Prototyp mit separatem Booking Service](./adrs/ADR-001-frontend-prototyp-und-booking-service.md)
+- `docs/architektur/adrs/`:
+  - [ADR-001: Technologie-Stack für den Booking Service](../architektur/adrs/ADR-001-technologie-stack-fuer-booking-service.md)
+  - [ADR-002: Ressourcendaten als Mock-Daten in der SPA](../architektur/adrs/ADR-002-ressourcendaten-als-mock-in-der-spa.md)
+  - [ADR-003: Authentifizierung – Basic-Auth ohne Passwörter](../architektur/adrs/ADR-003-authentifizierung-basic-auth-ohne-passwoerter.md)
+
+Bewusst eingegangene Kompromisse sind in den [Technischen Schulden](../architektur/technische-schulden.md) festgehalten.
 
 ---
 
