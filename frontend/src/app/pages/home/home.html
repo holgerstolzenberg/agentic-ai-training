@@ -29,27 +29,6 @@
 </section>
 
 <div class="clv-shell">
-  <!-- Verbindungstest Frontend ↔ Booking-Service (GET /api/hello über Proxy /api/v1) -->
-  <section class="backend-status" aria-live="polite">
-    @if (backendMessage(); as msg) {
-      <p class="clv-notice clv-notice--success backend-status__line">
-        <span class="dot dot--ok" aria-hidden="true"></span>
-        Booking-Service verbunden – Antwort von <code>/api/hello</code>:
-        <strong>{{ msg }}</strong>
-      </p>
-    } @else if (backendError(); as err) {
-      <p class="clv-notice clv-notice--error backend-status__line">
-        <span class="dot dot--err" aria-hidden="true"></span>
-        {{ err }} – läuft das Backend? (<code>cd backend &amp;&amp; ./mvnw spring-boot:start</code>)
-      </p>
-    } @else {
-      <p class="clv-notice clv-notice--info backend-status__line">
-        <span class="dot" aria-hidden="true"></span>
-        Verbinde mit dem Booking-Service …
-      </p>
-    }
-  </section>
-
   <section class="stats">
     <div class="stat">
       <span class="stat__num">{{ anzahlStandorte }}</span>

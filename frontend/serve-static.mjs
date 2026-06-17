@@ -16,10 +16,14 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { request as httpRequest } from 'node:http';
 
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), 'dist', 'calvin', 'browser');
 const PORT = Number(process.env.PORT ?? 4200);
 const HOST = process.env.HOST ?? '0.0.0.0';
+const BACKEND_HOST = process.env.BACKEND_HOST ?? 'localhost';
+const BACKEND_PORT = Number(process.env.BACKEND_PORT ?? 8081);
+const API_PREFIX = '/api/v1';
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -42,7 +46,23 @@ async function sendFile(res, path) {
   res.end(body);
 }
 
+function proxyToBackend(req, res) {
+  const proxyReq = httpRequest(
+    { host: BACKEND_HOST, port: BACKEND_PORT, path: req.url, method: req.method, headers: { ...req.headers, host: `${BACKEND_HOST}:${BACKEND_PORT}` } },
+    (proxyRes) => {
+      res.writeHead(proxyRes.statusCode, proxyRes.headers);
+      proxyRes.pipe(res);
+    },
+  );
+  proxyReq.on('error', () => { res.writeHead(502); res.end('502 – Backend nicht erreichbar'); });
+  req.pipe(proxyReq);
+}
+
 const server = createServer(async (req, res) => {
+  if ((req.url ?? '/').startsWith(API_PREFIX)) {
+    proxyToBackend(req, res);
+    return;
+  }
   try {
     const urlPath = decodeURIComponent((req.url ?? '/').split('?')[0]);
     // Pfad-Traversal verhindern; auf ROOT begrenzen.

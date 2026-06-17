@@ -1,13 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CatalogService } from './core/catalog.service';
 import { BookingService } from './core/booking.service';
+import { HealthService } from './core/health.service';
 
-/**
- * Anwendungs-Shell: INNOQ-gebrandeter Kopfbereich mit der
- * Hauptnavigation. Die Navigationspunkte folgen den Entitäten aus
- * dem Glossar (Standort, Konferenzraum, Raumbuchung, Arbeitsplatz).
- */
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
@@ -17,6 +13,15 @@ import { BookingService } from './core/booking.service';
 export class App {
   private readonly catalog = inject(CatalogService);
   protected readonly booking = inject(BookingService);
+  private readonly health = inject(HealthService);
 
   protected readonly mitarbeiter = this.catalog.aktuellerMitarbeiter;
+  protected readonly backendUp = signal<boolean | null>(null);
+
+  constructor() {
+    this.health.check().subscribe({
+      next: (h) => this.backendUp.set(h.status === 'UP'),
+      error: () => this.backendUp.set(false),
+    });
+  }
 }

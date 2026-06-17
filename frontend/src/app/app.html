@@ -42,6 +42,10 @@
 <footer class="clv-footer">
   <div class="clv-footer__inner">
     <span>Calvin · Internes Raumbuchungssystem von INNOQ</span>
-    <span class="clv-footer__note">Prototyp · Mock-Daten · ohne Backend</span>
+    @if (backendUp() === true) {
+      <span class="clv-footer__status clv-footer__status--ok">Backend verbunden</span>
+    } @else if (backendUp() === false) {
+      <span class="clv-footer__status clv-footer__status--err">Backend nicht erreichbar</span>
+    }
   </div>
 </footer>

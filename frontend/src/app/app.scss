@@ -107,4 +107,19 @@
   justify-content: space-between;
   gap: 1rem;
 }
-.clv-footer__note { color: var(--clv-apricot); }
+.clv-footer__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+}
+.clv-footer__status::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--clv-gray-500);
+}
+.clv-footer__status--ok::before { background: var(--clv-green); }
+.clv-footer__status--err::before { background: var(--clv-red); }
