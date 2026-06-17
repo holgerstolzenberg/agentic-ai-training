@@ -36,7 +36,7 @@ Für den Prototyp bringt Okta jedoch Nachteile:
 
 ## Konsequenzen
 
-**Positiv**
+### Positiv
 
 - Sofort lauffähig, reibungsloses Multi-User-Testing.
 - Migrationspfad zu Okta bleibt offen (gleicher Security-Stack).

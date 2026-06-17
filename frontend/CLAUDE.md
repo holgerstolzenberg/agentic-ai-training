@@ -28,7 +28,7 @@ Always follow the wording from the glossary.
 
 ## Folder Structure
 
-```
+```text
 frontend/
 ├── angular.json                        # Build configuration (baseHref, proxyConfig …)
 ├── proxy.conf.json                     # Dev server: /api/v1 → localhost:8081

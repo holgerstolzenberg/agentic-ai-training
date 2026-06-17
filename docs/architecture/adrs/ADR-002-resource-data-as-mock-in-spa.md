@@ -35,7 +35,7 @@ betreiben. Der Frontend-Prototyp hält diese Daten bereits als Mock-Daten vor.
 
 ## Konsequenzen
 
-**Positiv**
+### Positiv
 
 - Minimaler Aufwand, schneller lauffähiger Prototyp.
 - Booking-Service bleibt schlank (nur Buchungen + IDs).

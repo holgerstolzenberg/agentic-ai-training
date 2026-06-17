@@ -14,7 +14,7 @@ npm install      # einmalig
 
 | Modus | Befehl | Beschreibung |
 |-------|--------|--------------|
-| Mit Backend | `npm run start:backend` | Dev-Server auf http://localhost:4200, leitet `/api/v1/*` per Proxy an den Booking-Service (`:8080`) weiter |
+| Mit Backend | `npm run start:backend` | Dev-Server auf <http://localhost:4200>, leitet `/api/v1/*` per Proxy an den Booking-Service (`:8080`) weiter |
 | Ohne Backend | `npm start` | Dev-Server ohne Proxy, nur mit Mock-Daten |
 | Produktions-Build | `npm run build` | Build nach `dist/calvin` |
 | Tests | `npm test` | Unit-Tests (benötigt Chrome/Chromium) |
@@ -39,7 +39,7 @@ Die Design-Tokens liegen zentral in `src/styles.scss` (`--clv-*`).
 
 ## Architektur
 
-```
+```text
 src/app/
   core/                 Domänenmodell, Services, Backend-Anbindung
     models.ts           Entitäten gemäß Glossar (Ubiquitous Language)

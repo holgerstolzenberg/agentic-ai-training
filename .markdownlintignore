@@ -1,0 +1,10 @@
+.claude/worktrees/**
+**/node_modules/**
+.agents/skills/epic/scripts/**
+.agents/skills/story/scripts/**
+.agents/skills/subtasks/scripts/**
+.agents/skills/user-story/scripts/**
+.claude/skills/epic/scripts/**
+.claude/skills/story/scripts/**
+.claude/skills/subtasks/scripts/**
+.claude/skills/user-story/scripts/**

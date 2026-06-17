@@ -19,6 +19,7 @@ Commits seit main: !`git log --oneline main..HEAD`
 Führe diese Schritte der Reihe nach aus:
 
 1. **Branch pushen** (falls noch nicht gepusht):
+
    ```bash
    git push -u origin HEAD
    ```

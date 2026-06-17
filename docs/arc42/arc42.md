@@ -18,7 +18,7 @@ Für die vollständige Produktbeschreibung und Features siehe [Produktvision](..
 
 ### Qualitätsziele
 
-Die folgenden Qualitätsziele haben die höchste Priorität für die Architektur von Calvin. Die vollständigen Qualitätsszenarien sind in [Kapitel 10](#10-qualitätsanforderungen) dokumentiert.
+Die folgenden Qualitätsziele haben die höchste Priorität für die Architektur von Calvin. Die vollständigen Qualitätsszenarien sind in [Kapitel 10](#qualitätsanforderungen) dokumentiert.
 
 | Priorität | Qualitätsziel | Szenario |
 |-----------|---------------|----------|

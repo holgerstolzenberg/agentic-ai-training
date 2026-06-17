@@ -23,6 +23,7 @@ Calvin gibt INNOQ-Mitarbeitern die Sicherheit, dass der gebuchte Konferenzraum a
 ## Schlüsselfunktionen
 
 ### Kern: Konferenzraumbuchung
+
 - **Raumbuchung** – Buchung von Konferenzräumen für Meetings und Workshops
 - **Verfügbarkeitsanzeige** – Automatische Blockierung verhindert Doppelbuchungen
 - **Multi-Standort** – Alle 8 INNOQ-Standorte in einem System
@@ -30,6 +31,7 @@ Calvin gibt INNOQ-Mitarbeitern die Sicherheit, dass der gebuchte Konferenzraum a
 - **Ausstattungsinfo** – Informationen zu Raumgröße und Ausstattung
 
 ### Später: Arbeitsplatzbuchung
+
 - Buchung von Einzelarbeitsplätzen
 - Übersicht, wer wann im Büro ist
 

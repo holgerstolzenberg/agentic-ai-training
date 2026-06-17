@@ -3,7 +3,7 @@
 In the training environment the app is **not** opened in the browser at `localhost:3000`
 but via a proxy under a subpath:
 
-```
+```text
 https://crucible.ch.innoq.io/t/<token>/s/<session>/proxy/3000/
 ```
 

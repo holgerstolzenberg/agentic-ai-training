@@ -17,6 +17,7 @@ Bei der Planung eines Meetings oder Workshops ist die Raumgröße ein entscheide
 Die Kapazitätsfilterung ermöglicht es, aus der Liste verfügbarer Konferenzräume am ausgewählten Standort gezielt nach passenden Räumen zu suchen. So werden zu kleine Räume direkt ausgeblendet und der Mitarbeiter sieht nur relevante Optionen.
 
 Diese Funktionalität ist besonders wichtig für:
+
 - Team-Meetings mit definierter Teilnehmerzahl
 - Kundenworkshops mit mehreren externen und internen Teilnehmern
 - Schulungen oder Präsentationen vor größeren Gruppen

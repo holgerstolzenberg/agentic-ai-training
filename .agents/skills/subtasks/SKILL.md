@@ -116,6 +116,7 @@ Füge eine Planning-Section zur Story hinzu. Aktualisiere Akzeptanzkriterien fal
 ### Schritt 2: Für JEDEN Subtask sequenziell
 
 1. Ticket-Nummer generieren:
+
    ```bash
    ./.claude/skills/subtasks/scripts/get-next-ticket-number
    ```
@@ -127,6 +128,7 @@ Füge eine Planning-Section zur Story hinzu. Aktualisiere Akzeptanzkriterien fal
 </template>
 
 ### Schritt 3: Story aktualisieren
+
 Füge am Ende der Story einen Subtasks-Abschnitt hinzu:
 
 <template>
@@ -135,7 +137,9 @@ Füge am Ende der Story einen Subtasks-Abschnitt hinzu:
 </template>
 
 ### Schritt 4: Backlog README aktualisieren
+
 In `docs/product/backlog/README.md` die Subtasks unter der Parent-Story einfügen (2 Leerzeichen Einrückung):
+
 ```markdown
 - [CLVN-008 Story Name](CLVN-008-STORY-name.md)
   - [CLVN-009-SUBTASK-name](CLVN-009-SUBTASK-name.md)

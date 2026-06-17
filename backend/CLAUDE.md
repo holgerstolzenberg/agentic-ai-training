@@ -29,7 +29,7 @@ Always follow the wording from the glossary.
 
 ## Folder Structure
 
-```
+```text
 backend/
 ├── .sdkmanrc                          # Java version for SDKMAN
 ├── pom.xml                            # No Spring parent, Spring BOM via dependencyManagement
@@ -52,7 +52,7 @@ backend/
 
 **Feature-based packaging** – code is grouped by business domain, not by technical layer.
 
-```
+```text
 com.innoq.calvin.booking.booking/    # Booking feature
     BookingController.java           # REST endpoints
     BookingService.java              # Business logic

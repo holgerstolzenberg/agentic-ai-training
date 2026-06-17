@@ -15,15 +15,19 @@ Der Nutzer entscheidet über das Design. Du setzt um, schlägst vor und verifizi
 @docs/product/product-vision.md
 
 ## Glossar (Ubiquitous Language)
+
 @docs/product/glossary.md
 
 ## Persona
+
 @docs/product/personas/innoq-employee.md
 
 ## Backlog
+
 @docs/product/backlog/backlog.md
 
 ## User Story Map
+
 @docs/product/user-story-maps/room-booking.md
 
 </context>
