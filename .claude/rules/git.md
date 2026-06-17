@@ -1,0 +1,5 @@
+---
+paths: []
+---
+
+- use conventional commits
