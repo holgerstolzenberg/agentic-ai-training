@@ -84,7 +84,37 @@
 .room__bookings { color: var(--clv-gray-500); font-size: 0.8rem; }
 .room__cta { color: var(--clv-petrol); font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
 
+/* ---- Room selection (CLVN-016) --------------------------------------- */
+.room--selected {
+  border: 2px solid var(--clv-petrol) !important;
+  box-shadow: 0 0 0 3px rgba(0, 65, 83, 0.18), var(--clv-shadow-sm);
+}
+
+.selection-panel {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--clv-white);
+  border: 2px solid var(--clv-petrol);
+  border-radius: var(--clv-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  animation: slide-in 0.2s ease;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.selection-panel__info { flex: 1; }
+.selection-panel__info h3 { margin: 0 0 0.3rem; }
+.selection-panel__info p { margin: 0 0 0.15rem; color: var(--clv-gray-600); font-size: 0.9rem; }
+.selection-panel__actions { display: flex; gap: 0.75rem; align-items: center; flex-shrink: 0; }
+
 @media (max-width: 880px) {
   .layout { grid-template-columns: 1fr; }
   .filters { position: static; }
+  .selection-panel { flex-direction: column; align-items: flex-start; }
 }

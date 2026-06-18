@@ -1,9 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest, of } from 'rxjs';
+import { catchError, shareReplay, switchMap } from 'rxjs/operators';
 import { CatalogService } from '../../core/catalog.service';
 import { BookingService } from '../../core/booking.service';
-import { ConferenceRoom } from '../../core/models';
+import { ConferenceRoom, RoomBooking } from '../../core/models';
 import { formatDate } from '../../core/format';
 
 /**
@@ -16,7 +19,7 @@ import { formatDate } from '../../core/format';
  */
 @Component({
   selector: 'clv-find-rooms',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule],
   templateUrl: './find-rooms.html',
   styleUrl: './find-rooms.scss',
 })
@@ -24,12 +27,13 @@ export class FindRooms {
   private readonly catalog = inject(CatalogService);
   private readonly booking = inject(BookingService);
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
-  protected readonly locations = this.catalog.getLocations();
-  protected readonly equipment = this.catalog.getEquipment();
+  protected readonly locations = toSignal(this.catalog.getLocations(), { initialValue: [] });
+  protected readonly equipment = toSignal(this.catalog.getEquipment(), { initialValue: [] });
 
   /* ---- Filter state (Signals) --------------------------------------- */
-  protected readonly locationId = signal<string>(this.initialLocation());
+  protected readonly locationId = signal<string>(this.route.snapshot.queryParamMap.get('location') ?? 'k');
   protected readonly minCapacity = signal<number | null>(null);
   protected readonly selectedEquipment = signal<Set<string>>(new Set());
   protected readonly date = signal<string>(this.booking.todayIso);
@@ -39,25 +43,43 @@ export class FindRooms {
   protected readonly todayIso = this.booking.todayIso;
   protected formatDate = formatDate;
 
-  private initialLocation(): string {
+  constructor() {
+    // Update default location from employee's home location once loaded
     const fromQuery = this.route.snapshot.queryParamMap.get('location');
-    return fromQuery ?? this.catalog.currentEmployee.homeLocationId;
+    if (!fromQuery) {
+      this.catalog.currentEmployee$.subscribe((emp) => {
+        if (emp) this.locationId.set(emp.homeLocationId);
+      });
+    }
   }
+
+  /** Rooms at the selected location, updated whenever locationId changes. */
+  private readonly allRooms$ = toObservable(this.locationId).pipe(
+    switchMap((id) => this.catalog.getRooms(id).pipe(catchError(() => of([])))),
+    shareReplay(1),
+  );
+  private readonly allRooms = toSignal(this.allRooms$, { initialValue: [] });
+
+  /** All confirmed bookings at the selected location for the selected date. */
+  private readonly dayBookings$ = combineLatest([toObservable(this.locationId), toObservable(this.date)]).pipe(
+    switchMap(([loc, d]) => this.booking.bookingsByLocationAndDate(loc, d).pipe(catchError(() => of([])))),
+    shareReplay(1),
+  );
+  private readonly dayBookings = toSignal(this.dayBookings$, { initialValue: [] as RoomBooking[] });
 
   /** Is the time window valid for availability checking? */
   protected readonly timeWindowValid = computed(
     () => !!this.date() && !!this.startTime() && !!this.endTime() && this.startTime() < this.endTime(),
   );
 
-  protected readonly selectedLocation = computed(() => this.catalog.getLocation(this.locationId()));
+  protected readonly selectedLocation = computed(() => this.locations().find((l) => l.id === this.locationId()));
 
   /** Rooms at the selected location, filtered by capacity and equipment. */
   protected readonly filteredRooms = computed<ConferenceRoom[]>(() => {
     const min = this.minCapacity();
     const features = this.selectedEquipment();
-    return this.catalog
-      .getRooms(this.locationId())
-      .filter((r) => (min == null || r.capacity >= min))
+    return this.allRooms()
+      .filter((r) => min == null || r.capacity >= min)
       .filter((r) => [...features].every((m) => r.equipmentIds.includes(m)))
       .sort((a, b) => a.capacity - b.capacity);
   });
@@ -65,6 +87,24 @@ export class FindRooms {
   protected readonly activeFilterCount = computed(
     () => (this.minCapacity() != null ? 1 : 0) + this.selectedEquipment().size,
   );
+
+  /* ---- Room selection (CLVN-016) ------------------------------------- */
+  protected readonly selectedRoom = signal<ConferenceRoom | null>(null);
+
+  protected readonly selectedRoomLocation = computed(() => {
+    const room = this.selectedRoom();
+    return room ? this.locations().find((l) => l.id === room.locationId) : null;
+  });
+
+  protected selectRoom(room: ConferenceRoom): void {
+    this.selectedRoom.set(room);
+  }
+
+  protected confirmSelection(): void {
+    const room = this.selectedRoom();
+    if (!room) return;
+    this.router.navigate(['/room', room.id], { queryParams: this.detailParams() });
+  }
 
   /* ---- Actions ------------------------------------------------------ */
   protected toggleEquipment(id: string): void {
@@ -84,20 +124,23 @@ export class FindRooms {
     this.selectedEquipment.set(new Set());
   }
 
-  /* ---- Per-room information --------------------------------------- */
+  /* ---- Per-room availability (from preloaded day bookings) ---------- */
   protected isAvailable(room: ConferenceRoom): boolean {
-    return this.booking.checkAvailability(room.id, this.date(), this.startTime(), this.endTime()).available;
+    if (!this.timeWindowValid()) return true;
+    const start = this.startTime();
+    const end = this.endTime();
+    return !this.dayBookings().some((b) => b.roomId === room.id && b.startTime < end && b.endTime > start);
   }
 
   protected getBookingCountToday(room: ConferenceRoom): number {
-    return this.booking.bookingsForRoom(room.id, this.date()).length;
+    return this.dayBookings().filter((b) => b.roomId === room.id).length;
   }
 
   protected equipmentIcon(id: string): string {
-    return this.catalog.getEquipmentById(id)?.icon ?? '•';
+    return this.equipment().find((e) => e.id === id)?.icon ?? '•';
   }
   protected equipmentName(id: string): string {
-    return this.catalog.getEquipmentById(id)?.name ?? id;
+    return this.equipment().find((e) => e.id === id)?.name ?? id;
   }
 
   /** Query params to pass the time window to the detail/booking page. */
