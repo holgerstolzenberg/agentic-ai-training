@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CatalogService } from './core/catalog.service';
 import { BookingService } from './core/booking.service';
@@ -15,7 +16,7 @@ export class App {
   protected readonly booking = inject(BookingService);
   private readonly health = inject(HealthService);
 
-  protected readonly employee = this.catalog.currentEmployee;
+  protected readonly employee = toSignal(this.catalog.currentEmployee$, { initialValue: null });
   protected readonly backendUp = signal<boolean | null>(null);
 
   constructor() {

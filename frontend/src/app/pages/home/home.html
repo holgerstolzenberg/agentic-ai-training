@@ -18,7 +18,7 @@
         <p class="hero__card-label">Your Next Booking</p>
         <strong class="hero__card-title">{{ b.title }}</strong>
         <ul class="hero__card-meta">
-          <li>📍 {{ roomName(b.roomId) }} · {{ locationName(b.locationId) }}</li>
+          <li>📍 {{ b.roomName ?? b.roomId }} · {{ b.locationName ?? b.locationId }}</li>
           <li>📅 {{ formatDate(b.date) }}</li>
           <li>🕒 {{ b.startTime }}–{{ b.endTime }}</li>
         </ul>
@@ -31,11 +31,11 @@
 <div class="clv-shell">
   <section class="stats">
     <div class="stat">
-      <span class="stat__num">{{ locationCount }}</span>
+      <span class="stat__num">{{ locationCount() }}</span>
       <span class="stat__label">Locations</span>
     </div>
     <div class="stat">
-      <span class="stat__num">{{ roomCount }}</span>
+      <span class="stat__num">{{ roomCount() }}</span>
       <span class="stat__label">Conference Rooms</span>
     </div>
     <div class="stat">

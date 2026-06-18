@@ -1,6 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CatalogService } from '../../core/catalog.service';
 import { BookingService } from '../../core/booking.service';
 import { RoomBooking } from '../../core/models';
 import { formatDate } from '../../core/format';
@@ -16,7 +15,6 @@ import { formatDate } from '../../core/format';
   styleUrl: './my-bookings.scss',
 })
 export class MyBookings {
-  private readonly catalog = inject(CatalogService);
   protected readonly booking = inject(BookingService);
 
   protected formatDate = formatDate;
@@ -38,16 +36,9 @@ export class MyBookings {
     return new Intl.DateTimeFormat('en-US', { month: 'short' }).format(new Date(iso + 'T00:00:00'));
   }
 
-  protected roomName(id: string): string {
-    return this.catalog.getRoom(id)?.name ?? id;
-  }
-  protected locationName(id: string): string {
-    return this.catalog.getLocation(id)?.name ?? id;
-  }
-
   protected cancelBooking(b: RoomBooking): void {
     if (confirm(`Really cancel booking "${b.title}" on ${formatDate(b.date)}?`)) {
-      this.booking.cancel(b.id);
+      this.booking.cancel(b.id).subscribe();
     }
   }
 }

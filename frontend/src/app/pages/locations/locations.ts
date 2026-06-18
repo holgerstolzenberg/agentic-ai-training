@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { CatalogService } from '../../core/catalog.service';
 
@@ -12,9 +13,5 @@ import { CatalogService } from '../../core/catalog.service';
 export class Locations {
   private readonly catalog = inject(CatalogService);
 
-  protected readonly locations = this.catalog.getLocations();
-
-  protected getRoomCount(locationId: string): number {
-    return this.catalog.getRoomCount(locationId);
-  }
+  protected readonly locations = toSignal(this.catalog.getLocations(), { initialValue: [] });
 }

@@ -1,48 +1,44 @@
-import { Injectable } from '@angular/core';
-import { EQUIPMENT_ITEMS, CONFERENCE_ROOMS, CURRENT_EMPLOYEE, LOCATIONS } from './mock-data';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import { Equipment, ConferenceRoom, Employee, Location } from './models';
 
 /**
- * Provides static master data (locations, conference rooms,
- * equipment, employees). Read-only – bookings are managed by
- * {@link BookingService}.
+ * Provides master data (locations, conference rooms, equipment, employees)
+ * via HTTP from the Booking Service backend.
  */
 @Injectable({ providedIn: 'root' })
 export class CatalogService {
-  private readonly locations = LOCATIONS;
-  private readonly rooms = CONFERENCE_ROOMS;
-  private readonly equipment = EQUIPMENT_ITEMS;
+  private readonly http = inject(HttpClient);
 
-  /** The currently logged-in INNOQ employee. */
-  readonly currentEmployee: Employee = CURRENT_EMPLOYEE;
+  private readonly locations$ = this.http.get<Location[]>('api/v1/locations').pipe(shareReplay(1));
+  private readonly equipment$ = this.http.get<Equipment[]>('api/v1/equipment').pipe(shareReplay(1));
 
-  getLocations(): Location[] {
-    return this.locations;
+  readonly currentEmployee$ = this.http.get<Employee>('api/v1/employees/current').pipe(shareReplay(1));
+
+  getLocations(): Observable<Location[]> {
+    return this.locations$;
   }
 
-  getLocation(id: string): Location | undefined {
-    return this.locations.find((s) => s.id === id);
+  getLocation(id: string): Observable<Location | undefined> {
+    return this.locations$.pipe(map((locs) => locs.find((l) => l.id === id)));
   }
 
-  getEquipment(): Equipment[] {
-    return this.equipment;
+  getEquipment(): Observable<Equipment[]> {
+    return this.equipment$;
   }
 
-  getEquipmentById(id: string): Equipment | undefined {
-    return this.equipment.find((e) => e.id === id);
+  getEquipmentById(id: string): Observable<Equipment | undefined> {
+    return this.equipment$.pipe(map((items) => items.find((e) => e.id === id)));
   }
 
-  /** All rooms, optionally filtered to a single location. */
-  getRooms(locationId?: string): ConferenceRoom[] {
-    return locationId ? this.rooms.filter((r) => r.locationId === locationId) : this.rooms;
+  getRooms(locationId?: string): Observable<ConferenceRoom[]> {
+    const params: Record<string, string> = locationId ? { 'location-id': locationId } : {};
+    return this.http.get<ConferenceRoom[]>('api/v1/rooms', { params });
   }
 
-  getRoom(id: string): ConferenceRoom | undefined {
-    return this.rooms.find((r) => r.id === id);
-  }
-
-  /** Number of conference rooms at a given location. */
-  getRoomCount(locationId: string): number {
-    return this.rooms.filter((r) => r.locationId === locationId).length;
+  getRoom(id: string): Observable<ConferenceRoom> {
+    return this.http.get<ConferenceRoom>(`api/v1/rooms/${id}`);
   }
 }

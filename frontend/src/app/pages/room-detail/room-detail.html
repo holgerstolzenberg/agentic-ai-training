@@ -1,5 +1,5 @@
 <div class="clv-shell">
-  @if (!room) {
+  @if (!room()) {
     <div class="clv-empty">
       <span class="icon">🚪</span>
       <h3>Room Not Found</h3>
@@ -12,27 +12,27 @@
     <div class="detail">
       <!-- ============ Left column: Room details (CLVN-006) ============ -->
       <section class="detail__main">
-        <div class="detail__banner" [style.background]="room.color">
-          <span class="detail__kicker">{{ location?.name }} · {{ location?.country }}</span>
-          <h1>{{ room.name }}</h1>
+        <div class="detail__banner" [style.background]="room()!.color">
+          <span class="detail__kicker">{{ location()?.name }} · {{ location()?.country }}</span>
+          <h1>{{ room()!.name }}</h1>
         </div>
 
         <div class="detail__facts">
           <div class="fact">
             <span class="fact__label">Capacity</span>
-            <span class="fact__value">👥 {{ room.capacity }} People</span>
+            <span class="fact__value">👥 {{ room()!.capacity }} People</span>
           </div>
           <div class="fact">
             <span class="fact__label">Location</span>
-            <span class="fact__value">📍 {{ room.floorInfo }}</span>
+            <span class="fact__value">📍 {{ room()!.floorInfo }}</span>
           </div>
           <div class="fact">
             <span class="fact__label">Area</span>
-            <span class="fact__value">📐 {{ room.areaSqm }} m²</span>
+            <span class="fact__value">📐 {{ room()!.areaSqm }} m²</span>
           </div>
         </div>
 
-        <p class="detail__desc">{{ room.description }}</p>
+        <p class="detail__desc">{{ room()!.description }}</p>
 
         <h3>Equipment</h3>
         <ul class="detail__ausstattung">
@@ -69,7 +69,7 @@
             <h2>Booking Confirmed</h2>
             <p class="confirm__sub">The room is reserved for you.</p>
             <dl class="confirm__details">
-              <div><dt>Room</dt><dd>{{ room.name }} · {{ location?.name }}</dd></div>
+              <div><dt>Room</dt><dd>{{ room()!.name }} · {{ location()?.name }}</dd></div>
               <div><dt>Title</dt><dd>{{ b.title }}</dd></div>
               <div><dt>Date</dt><dd>{{ formatDate(b.date) }}</dd></div>
               <div><dt>Time</dt><dd>{{ b.startTime }}–{{ b.endTime }}</dd></div>

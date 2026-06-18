@@ -23,6 +23,8 @@ export interface Location {
   address: string;
   /** Is this the headquarters? */
   headquarters?: boolean;
+  /** Number of conference rooms at this location (provided by backend). */
+  roomCount?: number;
 }
 
 /**
@@ -78,6 +80,10 @@ export interface RoomBooking {
   title: string;
   note?: string;
   status: BookingStatus;
+  /** Denormalized room name (provided by backend). */
+  roomName?: string;
+  /** Denormalized location name (provided by backend). */
+  locationName?: string;
 }
 
 /**

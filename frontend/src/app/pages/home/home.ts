@@ -1,5 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { CatalogService } from '../../core/catalog.service';
 import { BookingService } from '../../core/booking.service';
 import { formatDate } from '../../core/format';
@@ -15,8 +17,10 @@ export class Home {
   private readonly catalog = inject(CatalogService);
   protected readonly booking = inject(BookingService);
 
-  protected readonly locationCount = this.catalog.getLocations().length;
-  protected readonly roomCount = this.catalog.getRooms().length;
+  protected readonly locationCount = toSignal(this.catalog.getLocations().pipe(map((l) => l.length)), {
+    initialValue: 0,
+  });
+  protected readonly roomCount = toSignal(this.catalog.getRooms().pipe(map((r) => r.length)), { initialValue: 0 });
 
   /** The employee's next upcoming booking (from today onwards). */
   protected readonly nextBooking = computed(() => {
@@ -24,11 +28,5 @@ export class Home {
     return this.booking.myBookings().find((b) => b.date >= today) ?? null;
   });
 
-  protected roomName(roomId: string): string {
-    return this.catalog.getRoom(roomId)?.name ?? roomId;
-  }
-  protected locationName(locationId: string): string {
-    return this.catalog.getLocation(locationId)?.name ?? locationId;
-  }
   protected formatDate = formatDate;
 }

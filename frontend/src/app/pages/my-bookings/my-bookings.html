@@ -25,7 +25,7 @@
             <div class="buchung__body">
               <h3>{{ b.title }}</h3>
               <p class="buchung__meta">
-                🚪 {{ roomName(b.roomId) }} · 📍 {{ locationName(b.locationId) }}
+                🚪 {{ b.roomName ?? b.roomId }} · 📍 {{ b.locationName ?? b.locationId }}
               </p>
               <p class="buchung__when">📅 {{ formatDate(b.date) }} · 🕒 {{ b.startTime }}–{{ b.endTime }}</p>
               @if (b.note) { <p class="buchung__note">📝 {{ b.note }}</p> }
@@ -50,7 +50,7 @@
             </div>
             <div class="buchung__body">
               <h3>{{ b.title }}</h3>
-              <p class="buchung__meta">🚪 {{ roomName(b.roomId) }} · 📍 {{ locationName(b.locationId) }}</p>
+              <p class="buchung__meta">🚪 {{ b.roomName ?? b.roomId }} · 📍 {{ b.locationName ?? b.locationId }}</p>
               <p class="buchung__when">📅 {{ formatDate(b.date) }} · 🕒 {{ b.startTime }}–{{ b.endTime }}</p>
             </div>
             <div class="buchung__actions">

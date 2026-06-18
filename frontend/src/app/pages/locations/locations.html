@@ -9,7 +9,7 @@
   </header>
 
   <div class="clv-grid clv-grid--cards">
-    @for (s of locations; track s.id) {
+    @for (s of locations(); track s.id) {
       <a class="clv-card clv-card--link standort" [routerLink]="['/find-rooms']" [queryParams]="{ location: s.id }">
         <div class="standort__top">
           <span class="standort__kuerzel">{{ s.abbreviation }}</span>
@@ -20,7 +20,7 @@
           <p class="standort__land">{{ s.country }}</p>
           <p class="standort__adresse">{{ s.address }}</p>
           <div class="standort__foot">
-            <span class="clv-chip">🚪 {{ getRoomCount(s.id) }} Rooms</span>
+            <span class="clv-chip">🚪 {{ s.roomCount ?? 0 }} Rooms</span>
             <span class="standort__cta">Find Rooms →</span>
           </div>
         </div>

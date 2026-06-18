@@ -1,5 +1,7 @@
-import { computed, Injectable, signal } from '@angular/core';
-import { CURRENT_EMPLOYEE, seedBookings } from './mock-data';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { RoomBooking, Availability } from './models';
 
 /** Input data for a new room booking. */
@@ -13,36 +15,23 @@ export interface BookingRequest {
   note?: string;
 }
 
-/** Converts "HH:mm" to minutes since midnight. */
-function toMinutes(time: string): number {
-  const [h, m] = time.split(':').map(Number);
-  return h * 60 + m;
-}
-
-/** Do two time windows on the same day overlap? */
-function overlaps(aStart: string, aEnd: string, bStart: string, bEnd: string): boolean {
-  return toMinutes(aStart) < toMinutes(bEnd) && toMinutes(bStart) < toMinutes(aEnd);
-}
-
 /**
- * Manages room bookings in Signal state. Provides availability
- * checking and prevents double bookings
- * (Glossary: "Verfügbarkeit", "Doppelbuchung", "Buchungsübersicht").
+ * Manages room bookings via the Booking Service HTTP API.
+ * Local signal state is kept in sync via tap() after each mutation.
  */
 @Injectable({ providedIn: 'root' })
 export class BookingService {
-  /** Today's date – fixed once at startup (deterministic prototype). */
+  private readonly http = inject(HttpClient);
+
+  /** Today's date – fixed once at startup. */
   readonly today = new Date();
 
-  private readonly _bookings = signal<RoomBooking[]>(seedBookings(this.today));
+  private readonly _bookings = signal<RoomBooking[]>([]);
 
-  /** All bookings (read-only Signal). */
-  readonly bookings = this._bookings.asReadonly();
-
-  /** Bookings of the currently logged-in employee, in chronological order. */
+  /** Confirmed bookings of the current employee, in chronological order. */
   readonly myBookings = computed(() =>
     this._bookings()
-      .filter((b) => b.employee === CURRENT_EMPLOYEE.name && b.status === 'confirmed')
+      .filter((b) => b.status === 'confirmed')
       .sort((a, b) => (a.date + a.startTime).localeCompare(b.date + b.startTime)),
   );
 
@@ -54,56 +43,44 @@ export class BookingService {
     return this.today.toISOString().slice(0, 10);
   }
 
-  /** Confirmed bookings for a room on a given date (sorted). */
-  bookingsForRoom(roomId: string, date: string): RoomBooking[] {
-    return this._bookings()
-      .filter((b) => b.roomId === roomId && b.date === date && b.status === 'confirmed')
-      .sort((a, b) => toMinutes(a.startTime) - toMinutes(b.startTime));
+  constructor() {
+    this.http.get<RoomBooking[]>('api/v1/bookings').subscribe((bookings) => {
+      this._bookings.set(bookings);
+    });
   }
 
-  /**
-   * Checks the availability of a room for a time window and
-   * returns any conflicting bookings.
-   */
-  checkAvailability(roomId: string, date: string, startTime: string, endTime: string): Availability {
-    const conflicts = this.bookingsForRoom(roomId, date).filter((b) =>
-      overlaps(startTime, endTime, b.startTime, b.endTime),
-    );
-    return { available: conflicts.length === 0, conflicts };
+  /** Confirmed bookings for a room on a given date, sorted by start time. */
+  bookingsForRoom(roomId: string, date: string): Observable<RoomBooking[]> {
+    return this.http.get<RoomBooking[]>('api/v1/bookings', {
+      params: { 'room-id': roomId, date },
+    });
   }
 
-  /**
-   * Creates a new room booking – provided no double booking would result.
-   * Throws on conflict.
-   */
-  bookRoom(request: BookingRequest): RoomBooking {
-    if (toMinutes(request.endTime) <= toMinutes(request.startTime)) {
-      throw new Error('End time must be after start time.');
-    }
-    const { available } = this.checkAvailability(
-      request.roomId,
-      request.date,
-      request.startTime,
-      request.endTime,
-    );
-    if (!available) {
-      throw new Error('The room is already occupied in the selected time window.');
-    }
-
-    const booking: RoomBooking = {
-      id: `b-${this.today.getFullYear()}${Math.floor(performance.now())}-${this._bookings().length}`,
-      employee: CURRENT_EMPLOYEE.name,
-      status: 'confirmed',
-      ...request,
-    };
-    this._bookings.update((list) => [...list, booking]);
-    return booking;
+  /** All confirmed bookings for a location on a given date. */
+  bookingsByLocationAndDate(locationId: string, date: string): Observable<RoomBooking[]> {
+    return this.http.get<RoomBooking[]>('api/v1/bookings', {
+      params: { 'location-id': locationId, date },
+    });
   }
 
-  /** Cancels a booking (Glossary: Buchungsverwaltung). */
-  cancel(bookingId: string): void {
-    this._bookings.update((list) =>
-      list.map((b) => (b.id === bookingId ? { ...b, status: 'cancelled' } : b)),
-    );
+  /** Checks availability of a room for a time window. */
+  checkAvailability(roomId: string, date: string, startTime: string, endTime: string): Observable<Availability> {
+    return this.http.get<Availability>('api/v1/availability', {
+      params: { 'room-id': roomId, date, 'start-time': startTime, 'end-time': endTime },
+    });
+  }
+
+  /** Creates a new room booking. Returns the created booking on success. */
+  bookRoom(request: BookingRequest): Observable<RoomBooking> {
+    return this.http
+      .post<RoomBooking>('api/v1/bookings', request)
+      .pipe(tap((booking) => this._bookings.update((list) => [...list, booking])));
+  }
+
+  /** Cancels a booking. */
+  cancel(bookingId: string): Observable<void> {
+    return this.http
+      .delete<void>(`api/v1/bookings/${bookingId}`)
+      .pipe(tap(() => this._bookings.update((list) => list.filter((b) => b.id !== bookingId))));
   }
 }
