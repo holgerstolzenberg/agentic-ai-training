@@ -14,8 +14,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "bookings", uniqueConstraints = @UniqueConstraint(name = "uq_booking_room_date_start", columnNames = {
-		"room_id", "date", "start_time"}))
+@Table(name = "bookings", uniqueConstraints = @UniqueConstraint(name = "uq_confirmed_booking_room_date_start", columnNames = {
+		"room_id", "date", "start_time", "status"}))
 @Getter
 @Setter
 public class BookingEntity {

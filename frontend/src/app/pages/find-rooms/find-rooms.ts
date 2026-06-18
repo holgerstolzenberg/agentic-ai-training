@@ -125,18 +125,30 @@ export class FindRooms {
     this.selectedEquipment.set(new Set());
   }
 
+  /** Bookings grouped by roomId, sorted by startTime — computed once per dayBookings change. */
+  private readonly bookingsByRoomId = computed<Map<string, RoomBooking[]>>(() => {
+    const map = new Map<string, RoomBooking[]>();
+    for (const b of this.dayBookings()) {
+      const list = map.get(b.roomId) ?? [];
+      list.push(b);
+      map.set(b.roomId, list);
+    }
+    for (const list of map.values()) {
+      list.sort((a, b) => a.startTime.localeCompare(b.startTime));
+    }
+    return map;
+  });
+
   /* ---- Per-room availability (from preloaded day bookings) ---------- */
   protected isAvailable(room: ConferenceRoom): boolean {
     if (!this.timeWindowValid()) return true;
     const start = this.startTime();
     const end = this.endTime();
-    return !this.dayBookings().some((b) => b.roomId === room.id && b.startTime < end && b.endTime > start);
+    return !(this.bookingsByRoomId().get(room.id) ?? []).some((b) => b.startTime < end && b.endTime > start);
   }
 
   protected getBookingsForRoom(room: ConferenceRoom): RoomBooking[] {
-    return this.dayBookings()
-      .filter((b) => b.roomId === room.id)
-      .sort((a, b) => a.startTime.localeCompare(b.startTime));
+    return this.bookingsByRoomId().get(room.id) ?? [];
   }
 
   protected equipmentIcon(id: string): string {

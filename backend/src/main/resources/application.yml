@@ -19,6 +19,9 @@ server:
   servlet:
     context-path: /api/v1
 
+cors:
+  allowed-origins: "http://localhost:4200"
+
 management:
   endpoints:
     web:

@@ -44,8 +44,8 @@ public class BookingService {
 	}
 
 	public List<BookingResponse> findByRoomAndDate(String roomId, LocalDate date) {
-		List<BookingEntity> bookings = bookingRepository.findByRoomIdAndDateOrderByStartTimeAsc(roomId, date).stream()
-				.filter(b -> b.getStatus() == BookingStatus.CONFIRMED).toList();
+		List<BookingEntity> bookings = bookingRepository.findByRoomIdAndDateAndStatusOrderByStartTimeAsc(roomId, date,
+				BookingStatus.CONFIRMED);
 		return toResponseList(bookings);
 	}
 
@@ -64,9 +64,8 @@ public class BookingService {
 			LocalTime endTime) {
 		List<BookingEntity> dayBookings = bookingRepository.findByRoomIdAndDateAndStatus(roomId, date,
 				BookingStatus.CONFIRMED);
-		List<BookingResponse> conflicts = dayBookings.stream()
-				.filter(b -> overlaps(b.getStartTime(), b.getEndTime(), startTime, endTime)).map(this::toResponse)
-				.toList();
+		List<BookingResponse> conflicts = toResponseList(dayBookings.stream()
+				.filter(b -> overlaps(b.getStartTime(), b.getEndTime(), startTime, endTime)).toList());
 		return new AvailabilityResponse(conflicts.isEmpty(), conflicts);
 	}
 

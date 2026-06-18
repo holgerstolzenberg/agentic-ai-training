@@ -47,8 +47,6 @@ class BookingServiceTest {
 				.thenReturn(List.of(existing));
 		BookingResponse conflict = bookingResponse("10:00", "11:00");
 		when(bookingMapper.toResponse(any(), any(), any())).thenReturn(conflict);
-		when(roomRepository.findById(any())).thenReturn(Optional.empty());
-		when(locationRepository.findById(any())).thenReturn(Optional.empty());
 
 		AvailabilityResponse result = bookingService.checkAvailability(ROOM_ID, DATE, LocalTime.of(10, 30),
 				LocalTime.of(12, 0));

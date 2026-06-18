@@ -17,9 +17,10 @@ public interface BookingRepository extends JpaRepository<BookingEntity, String> 
 
 	List<BookingEntity> findByRoomIdAndDateAndStatus(String roomId, LocalDate date, BookingStatus status);
 
+	List<BookingEntity> findByRoomIdAndDateAndStatusOrderByStartTimeAsc(String roomId, LocalDate date,
+			BookingStatus status);
+
 	List<BookingEntity> findByLocationIdAndDateAndStatus(String locationId, LocalDate date, BookingStatus status);
 
 	List<BookingEntity> findByEmployeeAndStatusOrderByDateAscStartTimeAsc(String employee, BookingStatus status);
-
-	List<BookingEntity> findByRoomIdAndDateOrderByStartTimeAsc(String roomId, LocalDate date);
 }
