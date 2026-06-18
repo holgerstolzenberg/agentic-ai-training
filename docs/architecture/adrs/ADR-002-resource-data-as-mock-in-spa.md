@@ -1,7 +1,7 @@
-# ADR-002: Ressourcendaten als Mock-Daten in der SPA (kein separater Resource-Service)
+# ADR-002: Resource Data as Mock Data in the SPA (no separate Resource Service)
 
-**Status:** Akzeptiert
-**Datum:** 2026-06-17
+**Status:** Superseded (2026-06-18) — resource data migrated to the Booking Service backend as part of CLVN-016
+**Date:** 2026-06-17
 
 ## Kontext und Problemstellung
 
