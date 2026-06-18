@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, of } from 'rxjs';
@@ -47,7 +47,7 @@ export class FindRooms {
     // Update default location from employee's home location once loaded
     const fromQuery = this.route.snapshot.queryParamMap.get('location');
     if (!fromQuery) {
-      this.catalog.currentEmployee$.subscribe((emp) => {
+      this.catalog.currentEmployee$.pipe(takeUntilDestroyed()).subscribe((emp) => {
         if (emp) this.locationId.set(emp.homeLocationId);
       });
     }
