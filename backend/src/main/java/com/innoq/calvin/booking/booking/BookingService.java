@@ -1,13 +1,18 @@
 package com.innoq.calvin.booking.booking;
 
+import com.innoq.calvin.booking.location.LocationEntity;
 import com.innoq.calvin.booking.location.LocationRepository;
+import com.innoq.calvin.booking.room.RoomEntity;
 import com.innoq.calvin.booking.room.RoomRepository;
 import com.innoq.calvin.booking.shared.DoubleBookingException;
 import com.innoq.calvin.booking.shared.ResourceNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,19 +38,21 @@ public class BookingService {
 	}
 
 	public List<BookingResponse> findMyBookings() {
-		return bookingRepository
-				.findByEmployeeAndStatusOrderByDateAscStartTimeAsc(CURRENT_EMPLOYEE, BookingStatus.CONFIRMED).stream()
-				.map(this::toResponse).toList();
+		List<BookingEntity> bookings = bookingRepository
+				.findByEmployeeAndStatusOrderByDateAscStartTimeAsc(CURRENT_EMPLOYEE, BookingStatus.CONFIRMED);
+		return toResponseList(bookings);
 	}
 
 	public List<BookingResponse> findByRoomAndDate(String roomId, LocalDate date) {
-		return bookingRepository.findByRoomIdAndDateOrderByStartTimeAsc(roomId, date).stream()
-				.filter(b -> b.getStatus() == BookingStatus.CONFIRMED).map(this::toResponse).toList();
+		List<BookingEntity> bookings = bookingRepository.findByRoomIdAndDateOrderByStartTimeAsc(roomId, date).stream()
+				.filter(b -> b.getStatus() == BookingStatus.CONFIRMED).toList();
+		return toResponseList(bookings);
 	}
 
 	public List<BookingResponse> findByLocationAndDate(String locationId, LocalDate date) {
-		return bookingRepository.findByLocationIdAndDateAndStatus(locationId, date, BookingStatus.CONFIRMED).stream()
-				.map(this::toResponse).toList();
+		List<BookingEntity> bookings = bookingRepository.findByLocationIdAndDateAndStatus(locationId, date,
+				BookingStatus.CONFIRMED);
+		return toResponseList(bookings);
 	}
 
 	public BookingResponse findById(String id) {
@@ -96,11 +103,25 @@ public class BookingService {
 		}
 	}
 
+	@Transactional
 	public void cancel(String id) {
 		BookingEntity entity = bookingRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Booking not found: " + id));
 		entity.setStatus(BookingStatus.CANCELLED);
 		bookingRepository.save(entity);
+	}
+
+	private List<BookingResponse> toResponseList(List<BookingEntity> bookings) {
+		Set<String> roomIds = bookings.stream().map(BookingEntity::getRoomId).collect(Collectors.toSet());
+		Set<String> locationIds = bookings.stream().map(BookingEntity::getLocationId).collect(Collectors.toSet());
+		Map<String, String> roomNames = roomRepository.findAllById(roomIds).stream()
+				.collect(Collectors.toMap(RoomEntity::getId, RoomEntity::getName));
+		Map<String, String> locationNames = locationRepository.findAllById(locationIds).stream()
+				.collect(Collectors.toMap(LocationEntity::getId, LocationEntity::getName));
+		return bookings.stream()
+				.map(b -> bookingMapper.toResponse(b, roomNames.getOrDefault(b.getRoomId(), b.getRoomId()),
+						locationNames.getOrDefault(b.getLocationId(), b.getLocationId())))
+				.toList();
 	}
 
 	private BookingResponse toResponse(BookingEntity e) {

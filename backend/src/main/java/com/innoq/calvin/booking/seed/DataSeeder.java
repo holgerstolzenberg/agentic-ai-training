@@ -26,6 +26,7 @@ public class DataSeeder implements ApplicationRunner {
 	private static final String[] ROOM_COLORS = {"#004153", "#ff9c66", "#009999", "#ff4d67", "#fff019", "#005268",
 			"#68ddc3", "#d01040"};
 
+	// IDs intentionally match the German-language equipment entities seeded below
 	private static final String[] EQUIPMENT_POOL = {"bildschirm", "beamer", "whiteboard", "flipchart", "videokonferenz",
 			"telefonkonferenz", "klimaanlage", "hdmi", "barrierefrei", "kaffee"};
 

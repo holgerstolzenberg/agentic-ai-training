@@ -33,6 +33,7 @@ export class FindRooms {
   protected readonly equipment = toSignal(this.catalog.getEquipment(), { initialValue: [] });
 
   /* ---- Filter state (Signals) --------------------------------------- */
+  // 'k' (Cologne) is the fallback until the employee home location loads; see constructor
   protected readonly locationId = signal<string>(this.route.snapshot.queryParamMap.get('location') ?? 'k');
   protected readonly minCapacity = signal<number | null>(null);
   protected readonly selectedEquipment = signal<Set<string>>(new Set());

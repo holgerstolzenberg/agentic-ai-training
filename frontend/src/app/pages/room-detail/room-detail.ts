@@ -84,10 +84,10 @@ export class RoomDetail {
     () => this.timeValid() && this.availability()?.available === true && this.title().trim().length > 0,
   );
 
-  protected equipment() {
+  protected readonly equipment = computed(() => {
     const items = this.allEquipment();
     return (this.room()?.equipmentIds ?? []).map((id) => items.find((e) => e.id === id)).filter(Boolean);
-  }
+  });
 
   /* ---- Actions ------------------------------------------------------ */
   protected submitBooking(): void {

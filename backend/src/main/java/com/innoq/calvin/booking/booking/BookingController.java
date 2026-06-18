@@ -1,7 +1,6 @@
 package com.innoq.calvin.booking.booking;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/bookings")
 public class BookingController {
 
 	private final BookingService bookingService;
@@ -25,7 +24,7 @@ public class BookingController {
 		this.bookingService = bookingService;
 	}
 
-	@GetMapping("/bookings")
+	@GetMapping
 	public List<BookingResponse> list(@RequestParam(name = "room-id", required = false) String roomId,
 			@RequestParam(name = "location-id", required = false) String locationId,
 			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
@@ -38,28 +37,20 @@ public class BookingController {
 		return bookingService.findMyBookings();
 	}
 
-	@GetMapping("/bookings/{id}")
+	@GetMapping("/{id}")
 	public BookingResponse get(@PathVariable String id) {
 		return bookingService.findById(id);
 	}
 
-	@PostMapping("/bookings")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public BookingResponse create(@RequestBody BookingRequest request) {
 		return bookingService.create(request);
 	}
 
-	@DeleteMapping("/bookings/{id}")
+	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void cancel(@PathVariable String id) {
 		bookingService.cancel(id);
-	}
-
-	@GetMapping("/availability")
-	public AvailabilityResponse availability(@RequestParam(name = "room-id") String roomId,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-			@RequestParam(name = "start-time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-			@RequestParam(name = "end-time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
-		return bookingService.checkAvailability(roomId, date, startTime, endTime);
 	}
 }

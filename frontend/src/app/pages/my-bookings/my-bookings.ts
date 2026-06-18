@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BookingService } from '../../core/booking.service';
 import { RoomBooking } from '../../core/models';
@@ -17,6 +17,7 @@ import { formatDate } from '../../core/format';
 export class MyBookings {
   protected readonly booking = inject(BookingService);
 
+  protected readonly cancelError = signal<string | null>(null);
   protected formatDate = formatDate;
 
   /** Upcoming bookings from today onwards. */
@@ -38,7 +39,10 @@ export class MyBookings {
 
   protected cancelBooking(b: RoomBooking): void {
     if (confirm(`Really cancel booking "${b.title}" on ${formatDate(b.date)}?`)) {
-      this.booking.cancel(b.id).subscribe();
+      this.cancelError.set(null);
+      this.booking.cancel(b.id).subscribe({
+        error: (err) => this.cancelError.set(err.error?.detail ?? err.message ?? 'Cancellation failed.'),
+      });
     }
   }
 }

@@ -5,6 +5,10 @@
     <p class="lead">All conference rooms you've booked – with the certainty that they are reserved for you.</p>
   </header>
 
+  @if (cancelError()) {
+    <p class="clv-notice clv-notice--error">{{ cancelError() }}</p>
+  }
+
   @if (upcomingBookings().length === 0 && pastBookings().length === 0) {
     <div class="clv-empty">
       <span class="icon">📅</span>
