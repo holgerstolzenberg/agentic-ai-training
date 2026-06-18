@@ -21,8 +21,8 @@ public class AvailabilityController {
 	@GetMapping
 	public AvailabilityResponse check(@RequestParam(name = "room-id") String roomId,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-			@RequestParam(name = "start-time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-			@RequestParam(name = "end-time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime) {
+			@RequestParam(name = "start-time") @DateTimeFormat(pattern = "HH:mm") LocalTime startTime,
+			@RequestParam(name = "end-time") @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
 		return bookingService.checkAvailability(roomId, date, startTime, endTime);
 	}
 }
